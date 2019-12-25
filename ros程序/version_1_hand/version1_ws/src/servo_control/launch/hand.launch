@@ -1,0 +1,12 @@
+<launch>
+<node
+	pkg="servo_control"
+	type="servo_control_ss.py"
+	name="servo_pos_publisher"
+/>
+<node
+	pkg="servo_control"
+	type="servo_set_torque.py"
+	name="servo_set_torque_publisher"
+/>
+</launch>

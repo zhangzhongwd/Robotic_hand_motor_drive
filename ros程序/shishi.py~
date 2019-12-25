@@ -1,0 +1,95 @@
+import cv2
+import cv2.cv as cv
+import numpy as np
+
+
+cap=cv2.VideoCapture(2)
+# cv2.waitKey(1000)
+
+while(cap.isOpened()):
+    ret,img=cap.read()
+    if ret==True:
+        cv2.imshow('frame',img)
+        k=cv2.waitKey(10)&0xff
+        if k==ord('q'):
+            cv2.imwrite('catch.jpg',img)
+            break
+
+cap.release()
+cv2.imshow('catch',img)
+
+
+minDistvalue=80
+param1value=50
+param2value=30
+img = cv2.imread('catch.jpg',0)
+img = cv2.medianBlur(img,5)
+cv2.namedWindow('detected circles')
+
+
+def minDist(x):
+    global img,minDistvalue,param1value,param2value
+    minDistvalue=x
+    cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
+
+    circles = cv2.HoughCircles(img,cv.CV_HOUGH_GRADIENT,1,minDistvalue,param1value,param2value,minRadius=0,maxRadius=0)
+    if circles is None:
+        cv2.imshow('detected circles',cimg)
+        return
+    for i in circles[0,:]:
+        cv2.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)
+        cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
+
+    cv2.imshow('detected circles',cimg)
+
+def param1(x):
+    global img,minDistvalue,param1value,param2value
+    param1value=x
+    cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
+
+    circles = cv2.HoughCircles(img,cv.CV_HOUGH_GRADIENT,1,minDistvalue,param1value,param2value,minRadius=0,maxRadius=0)
+    if circles is None:
+        cv2.imshow('detected circles',cimg)
+        return
+    for i in circles[0,:]:
+        cv2.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)
+        cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
+
+    cv2.imshow('detected circles',cimg)
+
+def param2(x):
+    global img,minDistvalue,param1value,param2value
+    param2value=x
+    cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
+
+    circles = cv2.HoughCircles(img,cv.CV_HOUGH_GRADIENT,1,minDistvalue,param1value,param2value,minRadius=0,maxRadius=0)
+    if circles is None:
+        cv2.imshow('detected circles',cimg)
+        return
+    for i in circles[0,:]:
+        cv2.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)
+        cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
+
+    cv2.imshow('detected circles',cimg)
+
+#minDist-Minimum distance between the centers of the detected circles. 
+#If the parameter is too small, multiple neighbor circles may be falsely detected in addition to a true one. 
+#If it is too large, some circles may be missed.
+cv2.createTrackbar('minDist','detected circles',minDistvalue,100,minDist)
+cv2.createTrackbar('param1','detected circles',param1value,100,param1)
+cv2.createTrackbar('param2','detected circles',param2value,100,param2)
+
+
+while(1):
+
+
+    # cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
+    # cv2.imshow('detected circles',cimg)
+    if cv2.waitKey(0) & 0xFF == 27:
+        break  
+
+
+
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()

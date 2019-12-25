@@ -1,0 +1,8 @@
+prefix=/home/zhong/version_1_hand/version1_ws/devel
+
+Name: servo_control
+Description: Description of servo_control
+Version: 0.0.0
+Cflags: -I/home/zhong/version_1_hand/version1_ws/devel/include
+Libs: -L/home/zhong/version_1_hand/version1_ws/devel/lib 
+Requires: message_runtime
